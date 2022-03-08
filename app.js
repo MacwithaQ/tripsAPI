@@ -14,7 +14,9 @@ const { localStrategy, jwtStrategy } = require("./middleware/passport");
 
 // Importing routers
 const usersRouter = require("./api/users/routes");
+const tripsRouter = require("./api/trips/routes");
 const path = require("path");
+
 // --------------------------------------------------------
 
 // Initialize app, define packages and middlewares used
@@ -37,6 +39,7 @@ app.use("/media", express.static(path.join(__dirname, "media")));
 
 // Routes
 app.use("/api/users", usersRouter);
+app.use("/api/trips", tripsRouter);
 
 // Error handler
 app.use((err, req, res, next) => {
