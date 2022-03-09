@@ -15,6 +15,7 @@ const TripSchema = new mongoose.Schema({
   image: {
     type: String,
   },
+  organizer: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
 
 module.exports = mongoose.model("Trip", TripSchema);
