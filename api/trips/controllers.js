@@ -10,9 +10,10 @@ exports.fetchTrips = async (req, res, next) => {
   }
 };
 
-exports.tripCreate = async (req, res) => {
+exports.tripCreate = async (req, res, next) => {
   try {
     req.body.organizer = req.user._id;
+    req.body.profile = req.user.profile_id;
     if (req.file) {
       req.body.image = `/${req.file.path}`;
       req.body.image = req.body.image.replace("\\", "/");
