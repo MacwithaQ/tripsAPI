@@ -15,6 +15,7 @@ const { localStrategy, jwtStrategy } = require("./middleware/passport");
 // Importing routers
 const usersRouter = require("./api/users/routes");
 const tripsRouter = require("./api/trips/routes");
+const profilesRouter = require("./api/profiles/routes");
 const path = require("path");
 
 // --------------------------------------------------------
@@ -29,6 +30,7 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 // Console logs the requests being pushed to the backend
+app.use("/media", express.static(path.join(__dirname, "media")));
 app.use((req, res, next) => {
   console.log(
     `${req.method} ${req.protocol}://${req.get("host")}${req.originalUrl}`
@@ -40,6 +42,7 @@ app.use("/media", express.static(path.join(__dirname, "media")));
 // Routes
 app.use("/api/users", usersRouter);
 app.use("/api/trips", tripsRouter);
+app.use("/api/profiles", profilesRouter);
 
 // Error handler
 app.use((err, req, res, next) => {

@@ -3,7 +3,7 @@ const Trip = require("../../models/Trip");
 
 exports.fetchTrips = async (req, res, next) => {
   try {
-    const trips = await Trip.find();
+    const trips = await Trip.find().populate("profile");
     return res.json(trips);
   } catch (error) {
     next(error);
@@ -19,6 +19,20 @@ exports.tripCreate = async (req, res) => {
     }
     const newTrip = await Trip.create(req.body);
     return res.status(201).json(newTrip);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.deleteTrip = async (req, res, next) => {
+  try {
+    const { tripId } = req.params;
+    const deletedTrip = await Trip.findByIdAndRemove(tripId);
+    if (deletedTrip) {
+      res.status(204).json({ msg: "Trip deleted successfully", deletedTrip });
+    } else {
+      res.status(404).json({ msg: "Trip not found" });
+    }
   } catch (error) {
     next(error);
   }
