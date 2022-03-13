@@ -21,6 +21,7 @@ const UserSchema = new mongoose.Schema({
   lastName: {
     type: String,
   },
+  profile_id: { type: mongoose.Schema.Types.ObjectId, ref: "Profile" },
 });
 
 module.exports = mongoose.model("User", UserSchema);

@@ -16,6 +16,7 @@ const TripSchema = new mongoose.Schema({
     type: String,
   },
   organizer: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  profile: { type: mongoose.Schema.Types.ObjectId, ref: "Profile" },
 });
 
 module.exports = mongoose.model("Trip", TripSchema);
