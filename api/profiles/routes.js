@@ -1,15 +1,16 @@
 const express = require("express");
 const {
   fetchProfiles,
-  updateProfile,
+  updateProfileImage,
   fetchSingleProfile,
 } = require("./controllers");
 const passport = require("passport");
+const upload = require("../../middleware/multer");
 
 const profilesRouter = express.Router();
 
 profilesRouter.get("/", fetchProfiles);
 profilesRouter.get("/:userId", fetchSingleProfile);
-profilesRouter.put("/", updateProfile);
+profilesRouter.put("/:profileId", upload.single("image"), updateProfileImage);
 
 module.exports = profilesRouter;

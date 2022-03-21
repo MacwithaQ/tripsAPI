@@ -27,26 +27,22 @@ exports.fetchProfileTrips = async (req, res, next) => {
   } catch (error) {}
 };
 
-exports.updateProfile = async (req, res, next) => {
+exports.updateProfileImage = async (req, res, next) => {
+  console.log(req.file);
   try {
-    // const { password } = req.body;
-    // const saltRounds = 10;
-    // req.body.password = await bcrypt.hash(password, saltRounds);
-    // const newUser = await User.create(req.body);
-    // const newProfile = await Profile.create({
-    //   user: newUser._id,
-    //   image: "media/profile-pic.png",
-    //   bio: "Enter your bio here",
-    //   trips: [],
-    // });
-    // console.log(newProfile);
-    // const payload = {
-    //   _id: newUser._id,
-    //   user: newUser.user,
-    //   exp: Date.now() + JWT_EXPIRATION_MS,
-    // };
-    // const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
-    // res.status(201).json({ token });
+    if (req.file) {
+      req.body.image = `/${req.file.path}`;
+      req.body.image = req.body.image.replace("\\", "/");
+    }
+    const { profileId } = req.params;
+    const profile = await Profile.findByIdAndUpdate(
+      { _id: profileId },
+      { image: req.body.image },
+      {
+        new: true,
+      }
+    );
+    res.status(200).json(profile);
   } catch (error) {
     next(error);
   }
